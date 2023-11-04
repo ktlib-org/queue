@@ -1,0 +1,11 @@
+version: '3.1'
+
+services:
+  ktlib-rabbitmq:
+    image: "rabbitmq:3-management"
+    ports:
+      - "6641:5672"
+      - "6642:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: ktlib
+      RABBITMQ_DEFAULT_PASS: local

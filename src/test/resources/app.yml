@@ -1,0 +1,6 @@
+queue:
+  rabbitmq:
+    username: ktlib
+    password: local
+    port: 6641
+    host: localhost
