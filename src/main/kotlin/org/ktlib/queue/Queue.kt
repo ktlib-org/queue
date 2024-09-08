@@ -1,15 +1,12 @@
 package org.ktlib.queue
 
-import org.ktlib.Json
-import org.ktlib.TypeRef
-import org.ktlib.lookup
-import org.ktlib.typeRef
+import org.ktlib.*
 
 /**
  * Interface for interacting with a Queuing system.
  */
 interface Queue {
-    companion object : Queue by lookup()
+    companion object : Queue by lookupInstance()
 
     enum class HandlerResult { Ack, NackRequeue, NackNoRequeue }
 
