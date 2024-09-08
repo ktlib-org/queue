@@ -12,6 +12,15 @@ jobs:
     name: Test and build new version
     runs-on: ubuntu-latest
 
+    services:
+      rabbitmq:
+        image: "rabbitmq:3-management"
+        ports:
+          - 6641:5672
+        env:
+          RABBITMQ_DEFAULT_USER: ktlib
+          RABBITMQ_DEFAULT_PASS: local
+
     steps:
       - uses: actions/checkout@v4
       - name: Set up JDK 17
