@@ -29,7 +29,7 @@ dependencies {
     val kotestVersion: String by project
     val jacksonVersion: String by project
 
-    implementation("com.github.ktlib-org:core:0.6.15")
+    implementation("com.github.ktlib-org:core:0.7.2")
     implementation("io.github.oshai:kotlin-logging-jvm:7.0.0")
     implementation("org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion")
     implementation("com.rabbitmq:amqp-client:5.21.0")
@@ -41,7 +41,7 @@ dependencies {
 }
 
 kotlin {
-    jvmToolchain(17)
+    jvmToolchain(21)
 }
 
 val test by tasks.getting(Test::class) {

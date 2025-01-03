@@ -5,8 +5,8 @@ import io.github.oshai.kotlinlogging.KotlinLogging
 import org.ktlib.Json
 import org.ktlib.TypeRef
 import org.ktlib.config
-import org.ktlib.error.ErrorReporter
 import org.ktlib.lazyConfig
+import org.ktlib.trace.Trace
 import java.io.IOException
 
 /**
@@ -87,6 +87,10 @@ object RabbitMQ : Queue {
                 properties: AMQP.BasicProperties,
                 body: ByteArray
             ) {
+                Trace.start(
+                    "$queueName-delivery",
+                    mapOf("consumerTag" to consumerTag, "envelope" to envelope, "properties" to properties)
+                )
                 try {
                     logger.debug { "Message received on $queueName: ${String(body)}" }
                     when (handler.invoke(Json.deserialize(body, messageClass))) {
@@ -96,8 +100,10 @@ object RabbitMQ : Queue {
                     }
                 } catch (t: Throwable) {
                     logger.error { "Error handling queue message ${envelope.deliveryTag}" }
-                    ErrorReporter.report(t)
+                    Trace.error(t)
                     channel.basicNack(envelope.deliveryTag, false, requeueOnHandlerError)
+                } finally {
+                    Trace.end()
                 }
             }
         }
